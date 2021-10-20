@@ -28,7 +28,6 @@ let ajouteSiAbsent x xs =
 let concatSansDoublons l1 l2 =
   List.fold_right ajouteSiAbsent (l1@l2) [];;
 
-
 let rec sp = fun p -> match p with
     Symb q -> [q]
   |Top |Bot -> []
