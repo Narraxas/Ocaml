@@ -1,6 +1,6 @@
 (* Ceci est un éditeur pour OCaml
-    Entrez votre programme ici, et envoyez-le au toplevel en utilisant le
-bouton "Évaluer le code" ci-dessous. *)
+   Entrez votre programme ici, et envoyez-le au toplevel en utilisant le
+   bouton "Évaluer le code" ci-dessous. *)
 
 type prop =
   | Symb of string
@@ -15,9 +15,6 @@ type prop =
 type valVerite = Zero | Un ;;
 type interpretation = (string * valVerite) list;;
 
-type unaire = valVerite -> valVerite;;
-type binaire = valVerite -> valVerite -> valVerite;;
-
 let f0 = Equ(And(Symb "a", Symb "c"),Or(Not(Symb "b"),Imp(Symb "c",And(Bot,Top))));;
 let f1 = Equ(And(Symb "a", Symb "b"), Or(Not(Symb "a"), Symb "b"));;
 let f2 = Or(Not(And(Symb "a", Not(Symb "b"))),  Not(Imp(Symb "a", Symb "b")));;
@@ -27,25 +24,15 @@ let f4 = And(And(And(And(And(Or(Or(Not(Symb "a"), Symb "b"), Symb "d"), Or(Not(S
 let i1 = [("a", Un); ("b", Zero); ("c", Un)];;
 let i2 = [("a", Zero); ("b", Zero); ("c", Zero)];;
 let i3 = [("a", Un); ("b", Un); ("c", Un)];;
-let i4 = [("a", Un); ("b", Un); ("c", Un); ("d", Un)];;
 
 let intSymb s i = List.assoc s i;;
-let intTop = Un;;
-let intBot = Zero;;
-let intNeg vq = if vq == Un then Zero else Un;;
-let intAnd vq vr = if vq == Un && vr == Un then Un else Zero;;
-let intOr vq vr = if vq == Zero && vr == Zero then Zero else Un;;
-let intImp vq vr = if vq == Un && vr == Zero then Zero else Un;;
-let intEqu vq vr = if vq == vr then Un else Zero;;
 
-let rec valV f i = match f with
-    Symb q -> intSymb q i
-  |Top -> intTop
-  |Bot -> intBot
-  |Not (q) -> intNeg(valV q i)
-  |And(q,r) -> intAnd (valV q i) (valV r i)
-  |Or(q,r) -> intOr (valV q i) (valV r i)
-  |Imp(q,r) -> intImp (valV q i) (valV r i)
-  |Equ(q,r) -> intEqu (valV q i) (valV r i);;
-
-let modele f i = valV f i == Un;;
+intSymb "a" i1;;
+intSymb "b" i1;;
+intSymb "c" i1;;
+intSymb "a" i2;;
+intSymb "b" i2;;
+intSymb "c" i2;;
+intSymb "a" i3;;
+intSymb "b" i3;;
+intSymb "c" i3;;

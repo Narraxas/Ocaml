@@ -1,6 +1,6 @@
 (* Ceci est un éditeur pour OCaml
     Entrez votre programme ici, et envoyez-le au toplevel en utilisant le
-bouton "Évaluer le code" ci-dessous. *)
+    bouton "Évaluer le code" ci-dessous. *)
 
 type prop =
   | Symb of string
@@ -48,4 +48,23 @@ let rec valV f i = match f with
   |Imp(q,r) -> intImp (valV q i) (valV r i)
   |Equ(q,r) -> intEqu (valV q i) (valV r i);;
 
-let modele f i = valV f i == Un;;
+valV f0 i1;;
+valV f0 i2;;
+valV f0 i3;;
+
+valV f1 i1;;
+valV f1 i2;;
+valV f1 i3;;
+
+valV f2 i1;;
+valV f2 i2;;
+valV f2 i3;;
+
+valV f3 i1;;
+valV f3 i2;;
+valV f3 i3;;
+
+valV f4 i1;;
+valV f4 i2;;
+valV f4 i3;;
+valV f4 i4;;

@@ -49,3 +49,8 @@ let rec valV f i = match f with
   |Equ(q,r) -> intEqu (valV q i) (valV r i);;
 
 let modele f i = valV f i == Un;;
+
+modele f0 i1;;
+modele f0 i2;;
+modele f1 i1;;
+modele f1 i2;;
