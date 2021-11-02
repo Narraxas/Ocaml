@@ -25,14 +25,14 @@ let dansListe x xs =
 let ajouteSiAbsent x xs =
   if dansListe x xs = true then xs else x::xs;;
 
-let concatSansDoublons l1 l2 =
+let union l1 l2 =
   List.fold_right ajouteSiAbsent (l1@l2) [];;
 
 let rec sp = fun p -> match p with
     Symb q -> [q]
   |Top |Bot -> []
   |Not (q) -> sp(q)
-  |And(q,r)| Or(q,r) | Imp(q,r) | Equ(q,r) -> concatSansDoublons (sp(q)) (sp(r));;
+  |And(q,r)| Or(q,r) | Imp(q,r) | Equ(q,r) -> union (sp(q)) (sp(r));;
 
 sp(f0);;
 sp(f1);;

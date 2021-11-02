@@ -37,14 +37,14 @@ let dansListe x xs =
 let ajouteSiAbsent x xs =
   if dansListe x xs = true then xs else x::xs;;
 
-let concatSansDoublons l1 l2 =
+let union l1 l2 =
   List.fold_right ajouteSiAbsent (l1@l2) [];;
 
 let rec sp = fun p -> match p with
     Symb q -> [q]
   |Top |Bot -> []
   |Not (q) -> sp(q)
-  |And(q,r)| Or(q,r) | Imp(q,r) | Equ(q,r) -> concatSansDoublons (sp(q)) (sp(r));;
+  |And(q,r)| Or(q,r) | Imp(q,r) | Equ(q,r) -> union (sp(q)) (sp(r));;
 
 let intSymb s i = List.assoc s i;;
 
@@ -66,13 +66,14 @@ let rec valV f i = match f with
   |Imp(q,r) -> intImp (valV q i) (valV r i)
   |Equ(q,r) -> intEqu (valV q i) (valV r i);;
 
-let addToList a l = a::l;;
-let rec consTous a l = List.map (addToList a) l;;
+let consTous a l = List.map (List.cons a) l;;
 let rec ensInt s = match s with
     [] -> [[]]
   |x::xs -> consTous (x, Zero) (ensInt xs) @ consTous (x, Un) (ensInt xs);;
 
 let modele f i = valV f i == Un;;
+let tousModele f eI = List.for_all (fun x ->x = true) (List.map (modele f) eI);;
+let valide f = tousModele f (ensInt (sp f));;
 let existeModele f eI = List.exists (fun x ->x = true) (List.map (modele f) eI);;
 let satisfiable f = existeModele f (ensInt (sp f));;
 let insatisfiable f = not (satisfiable f);;
@@ -80,15 +81,24 @@ let insatisfiable f = not (satisfiable f);;
 let bool_to_string b = if b = true then "true" else "false";;
 let rec print_bool_list l = match l with
   | [] -> print_string "\n"; ()
-  | h::q -> print_string (bool_to_string h); print_string " "; print_bool_list q;; 
+  | h::q -> print_string (bool_to_string h); print_string " "; print_bool_list q;;
 
 let rec equivalent1 f1 f2 =
-  let symb = concatSansDoublons (ensInt (sp f1)) (ensInt (sp f2)) in 
+  let symb = ensInt (union (sp f1) (sp f2)) in
   let l1v = List.map (modele f1) symb in
   let l2v = List.map (modele f2) symb in
   if (l1v = l2v) then true else false ;;
 
 equivalent1 (Symb "a") (Symb "a");;
-equivalent1 (And(Symb "a", Symb "b")) (And(Symb "b", Symb "a"));; 
+equivalent1 (And(Symb "a", Symb "b")) (And(Symb "b", Symb "a"));;
 equivalent1 (Or(Symb "a", Symb "b")) (And(Symb "a", Symb "b"));;
 equivalent1 (Imp(Symb "a", Symb "b")) (Imp(Not(Symb "b"), Not(Symb "a")));;
+equivalent1 (Or(Or(Symb "a", Symb "b"), Not(Symb "a"))) (Not(And(And(Symb "c", Symb "d"), Not(Symb "c"))));;
+
+let equivalent2 f1 f2 = valide (Equ(f1, f2));;
+
+equivalent2 (Symb "a") (Symb "a");;
+equivalent2 (And(Symb "a", Symb "b")) (And(Symb "b", Symb "a"));;
+equivalent2 (Or(Symb "a", Symb "b")) (And(Symb "a", Symb "b"));;
+equivalent2 (Imp(Symb "a", Symb "b")) (Imp(Not(Symb "b"), Not(Symb "a")));;
+equivalent2 (Or(Or(Symb "a", Symb "b"), Not(Symb "a"))) (Not(And(And(Symb "c", Symb "d"), Not(Symb "c"))));;

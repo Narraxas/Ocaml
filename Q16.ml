@@ -37,14 +37,14 @@ let dansListe x xs =
 let ajouteSiAbsent x xs =
   if dansListe x xs = true then xs else x::xs;;
 
-let concatSansDoublons l1 l2 =
+let union l1 l2 =
   List.fold_right ajouteSiAbsent (l1@l2) [];;
 
 let rec sp = fun p -> match p with
     Symb q -> [q]
   |Top |Bot -> []
   |Not (q) -> sp(q)
-  |And(q,r)| Or(q,r) | Imp(q,r) | Equ(q,r) -> concatSansDoublons (sp(q)) (sp(r));;
+  |And(q,r)| Or(q,r) | Imp(q,r) | Equ(q,r) -> union (sp(q)) (sp(r));;
 
 let intSymb s i = List.assoc s i;;
 let intTop = Un;;
@@ -65,8 +65,7 @@ let rec valV f i = match f with
   |Imp(q,r) -> intImp (valV q i) (valV r i)
   |Equ(q,r) -> intEqu (valV q i) (valV r i);;
 
-let addToList a l = a::l;;
-let rec consTous a l = List.map (addToList a) l;;
+let consTous a l = List.map (List.cons a) l;;
 let rec ensInt s = match s with
     [] -> [[]]
   |x::xs -> consTous (x, Zero) (ensInt xs) @ consTous (x, Un) (ensInt xs);;

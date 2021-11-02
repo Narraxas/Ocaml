@@ -51,8 +51,7 @@ let rec valV f i = match f with
 
 let modele f i = valV f i == Un;;
 
-let addToList a l = a::l;;
-let rec consTous a l = List.map (addToList a) l;;
+let consTous a l = List.map (List.cons a) l;;
 
 let rec ensInt s = match s with
     [] -> [[]]
