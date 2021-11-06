@@ -190,7 +190,7 @@ let modeleCommun fbfs i = List.for_all (fun x ->x = true) (List.map (modele_inv 
 let contradictoire fbfs = List.for_all (fun x ->x = false) (List.map (modeleCommun fbfs) (ensInt (tousSP fbfs)));;
 
 let nonConsequence fbfs f i = (modeleCommun fbfs i) && not(modele f i);;
-let consequence fbfs f = if (List.for_all (fun x ->x = false) (List.map (nonConsequence fbfs f) (ensInt (union (tousSP fbfs) (sp f))))) then true else false;; 
+let consequence fbfs f = List.for_all (fun x ->x = false) (List.map (nonConsequence fbfs f) (ensInt (union (tousSP fbfs) (sp f))));;
 
 let rec conjonction fbfs = match fbfs with
     [] -> failwith ("The list is empty")
