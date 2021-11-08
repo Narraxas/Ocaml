@@ -103,3 +103,4 @@ consequence [f0; f1; f2; f3; f4] Bot;;
 consequence [f0; f1; f2; f3; f4] Top;;
 consequence [f0; f1; f2] Top;;
 consequence [f0; f1; f2] Bot;;
+consequence [And(Symb "a", Symb "b"); Not(Symb "a"); Imp(Symb "b", Symb "d")] (Imp(Symb "c", Symb "d"));;

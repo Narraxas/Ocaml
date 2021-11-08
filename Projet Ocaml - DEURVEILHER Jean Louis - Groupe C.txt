@@ -342,7 +342,7 @@ consequence [f0; f1; f2; f3; f4] Bot;;
 consequence [f0; f1; f2; f3; f4] Top;;
 consequence [f0; f1; f2] Top;;
 consequence [f0; f1; f2] Bot;;
-consequence [And(Symb "a", Symb "b"); Not(Symb "a"); Imp(Symb "b", Symb "d")] Imp(Symb "c", Symb "d");;
+consequence [And(Symb "a", Symb "b"); Not(Symb "a"); Imp(Symb "b", Symb "d")] (Imp(Symb "c", Symb "d"));;
 
 (*Question 23*)
 
@@ -356,7 +356,7 @@ consequenceV [f0; f1; f2; f3; f4] Bot;;
 consequenceV [f0; f1; f2; f3; f4] Top;;
 consequenceV [f0; f1; f2] Top;;
 consequenceV [f0; f1; f2] Bot;;
-consequenceV [And(Symb "a", Symb "b"); Not(Symb "a"); Imp(Symb "b", Symb "d")] Imp(Symb "c", Symb "d");;
+consequenceV [And(Symb "a", Symb "b"); Not(Symb "a"); Imp(Symb "b", Symb "d")] (Imp(Symb "c", Symb "d"));;
 
 (*Question 24*)
 
