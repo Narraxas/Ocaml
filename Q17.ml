@@ -78,7 +78,7 @@ let existeModele f eI = List.exists (fun x ->x = true) (List.map (modele f) eI);
 let satisfiable f = existeModele f (ensInt (sp f));;
 let insatisfiable f = not (satisfiable f);;
 
-let bool_to_string b = if b = true then "true" else "false";;
+let bool_to_string b = if b = true then "true" else "false";; (*Fonctions de debug*)
 let rec print_bool_list l = match l with
   | [] -> print_string "\n"; ()
   | h::q -> print_string (bool_to_string h); print_string " "; print_bool_list q;;
